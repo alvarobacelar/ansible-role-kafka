@@ -17,6 +17,7 @@ before_script:
   - cd alvarobacelar.$ROLE_NAME
   - ansible-galaxy install alvarobacelar.ansible_role_zookeeper
   - mv $HOME/.ansible/roles/alvarobacelar.ansible_role_zookeeper $HOME/build/alvarobacelar/
+  - mv $HOME/.ansible/roles/geerlingguy.java $HOME/build/alvarobacelar/
 
 script:
   - molecule test
