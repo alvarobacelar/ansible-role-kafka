@@ -31,10 +31,10 @@ zoo_port_server: 2181 # porta do zookeepr
 Dependencias
 ------------
 
-Por padrão essa role usa uma dependência para a instalação do zookeeper, para executar essa role é preciso primeiro baixar as roles dependentes com o seguinte comando: 
+Por padrão essa role usa uma dependência para a instalação do zookeeper. Ao baixar essa role utilizando o ansible galaxy com comando abaixo, você vai baixar todas as suas dependências também:
 ```bash
-# ansible-galaxy install -r requeriments.yml
-```
+# ansible-galaxy install alvarobacelar.ansible_role_kafka
+``` 
 As dependências são: 
  - java
  - zookeeper
