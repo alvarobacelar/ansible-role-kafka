@@ -1,0 +1,16 @@
+---
+
+- name: criando o usuário kafka
+  user:
+    name: "{{ user_kafka }}"
+    shell: /sbin/nologin
+    comment: "Kafka user"
+  become: true
+
+- name: garantindo que o diretorio de log do kafka esteja criado
+  file:
+    path: "{{ log_dir_kafka }}"
+    owner: "{{ user_kafka }}"
+    mode: 0755
+    state: directory
+  become: true

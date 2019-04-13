@@ -1,0 +1,17 @@
+---
+
+# variáveis default do kafka
+path_kafka: /etc/kafka
+user_kafka: kafkauser
+version_kafka: 2.2.0
+version_kafka_release: 2.12
+port_kafka: 9092
+num_partition: 1
+num_threads: 8
+log_dir_kafka: /var/log/kafka
+enable_zoo_connect: true
+zoo_host_server: localhost
+zoo_port_server: 2181
+
+# link para download do kafka
+_kafka_link: http://ftp.unicamp.br/pub/apache/kafka/2.2.0/kafka_2.12-2.2.0.tgz

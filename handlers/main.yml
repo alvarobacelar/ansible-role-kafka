@@ -1,0 +1,8 @@
+---
+
+- name: inicia kafka
+  systemd:
+    name: kafka
+    state: started
+    daemon_reload: true
+  become: true

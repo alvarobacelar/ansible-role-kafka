@@ -1,0 +1,6 @@
+---
+- src: geerlingguy.java
+  name: java
+
+- src: alvarobacelar.zookeeer
+  name: zookeeper

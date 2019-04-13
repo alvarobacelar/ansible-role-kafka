@@ -1,0 +1,33 @@
+---
+
+- name: baixando kafka no servidor
+  unarchive:
+    src: "{{ _kafka_link }}"
+    dest: "/opt/"
+    owner: "{{ user_kafka }}"
+    creates: "/opt/kafka_{{ version_kafka_release }}-{{ version_kafka }}"
+    remote_src: true
+  become: true
+
+- name: criando um link simbolico do kafka no path {{ path_kafka }}
+  file:
+    src: "/opt/kafka_{{ version_kafka_release }}-{{ version_kafka }}"
+    dest: "{{ path_kafka }}"
+    state: link
+  become: true
+
+- name: alterando o arquivo server.properties
+  template:
+    src: server.properties.j2
+    dest: "{{ path_kafka }}/config/server.properties"
+    owner: "{{ user_kafka }}"
+    backup: true
+  become: true
+
+- name: copiando o arquivo service
+  template:
+    src: kafka.service.j2
+    dest: /etc/systemd/system/kafka.service
+  notify:
+    - inicia kafka
+  become: true

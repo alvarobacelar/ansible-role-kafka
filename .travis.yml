@@ -1,0 +1,23 @@
+---
+language: python
+services: docker
+
+env:
+  global:
+    - ROLE_NAME: kafka
+  matrix:
+    - MOLECULE_DISTRO: centos7
+
+install:
+  - pip install molecule docker ansible
+
+before_script:
+  - cd ../
+  - mv ansible-role-$ROLE_NAME alvarobacelar.$ROLE_NAME
+  - cd alvarobacelar.$ROLE_NAME
+
+script:
+  - molecule test
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
