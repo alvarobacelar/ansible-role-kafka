@@ -1,6 +1,8 @@
 ansible-role-kafka
 =========
 
+[![Build Status](https://travis-ci.org/alvarobacelar/ansible-role-kafka.svg?branch=master)](https://travis-ci.org/alvarobacelar/ansible-role-kafka)
+
 Instalação do kafka nos servidores RedHat e/ou CentOS
 
 Requesitos
