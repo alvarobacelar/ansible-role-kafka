@@ -24,6 +24,14 @@
     backup: true
   become: true
 
+- name: alterando o arquivo zookeeper.properties
+  template:
+    src: zookeeper.properties.j2
+    dest: "{{ path_kafka }}/config/zookeeper.properties"
+    owner: "{{ user_kafka }}"
+    backup: true
+  become: true
+
 - name: copiando o arquivo service
   template:
     src: kafka.service.j2
