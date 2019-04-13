@@ -32,6 +32,22 @@
     backup: true
   become: true
 
+- name: baixando a lib do prometheus
+  get_url:
+    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.6/jmx_prometheus_javaagent-0.6.jar
+    dest: /etc/kafka/libs/jmx_prometheus_javaagent-0.6.jar
+    owner: "{{ user_kafka }}"
+    mode: 0644
+  become: true
+
+- name: baixando o arquivo de metricas
+  get_url:
+    url: https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml
+    dest: /etc/kafka/kafka-0-8-2.yml
+    owner: "{{ user_kafka }}"
+    mode: 0644
+  become: true
+
 - name: copiando o arquivo service
   template:
     src: kafka.service.j2
