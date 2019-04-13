@@ -25,7 +25,9 @@ num_threads: 8
 log_dir_kafka: /var/log/kafka
 enable_zoo_connect: true
 zoo_host_server: localhost # host do zookeeper
-zoo_port_server: 2181 # porta do zookeepr
+zoo_port_server: 2181 # porta do zookeeper
+client_port_zoo: 2181
+data_dir_zoo: /var/lib/zookeeper
 ```
 
 Dependencias
