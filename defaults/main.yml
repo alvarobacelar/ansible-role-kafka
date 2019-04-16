@@ -17,6 +17,8 @@ enable_zoo_connect: true
 zoo_host_server: localhost
 zoo_port_server: 2181
 client_port_zoo: 2181
+xmx_limit: 2g
+xms_limit: 2g
 data_dir_zoo: /var/lib/zookeeper
 port_exp_prom: 7072
 

@@ -22,12 +22,19 @@ version_kafka_release: 2.12
 port_kafka: 9092
 num_partition: 1
 num_threads: 8
+default_replication: 1
+offset_topic_replication: 1
 log_dir_kafka: /var/log/kafka
+pass_key_kafka: mypass
+log_retention_hours: 60
 enable_zoo_connect: true
-zoo_host_server: localhost # host do zookeeper
-zoo_port_server: 2181 # porta do zookeeper
+zoo_host_server: localhost
+zoo_port_server: 2181
 client_port_zoo: 2181
+xmx_limit: 2g
+xms_limit: 2g
 data_dir_zoo: /var/lib/zookeeper
+port_exp_prom: 7072
 ```
 
 Dependencias

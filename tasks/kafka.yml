@@ -16,20 +16,19 @@
     state: link
   become: true
 
-- name: alterando o arquivo server.properties
+- name: alterando os arquivos de configuracao
   template:
-    src: server.properties.j2
-    dest: "{{ path_kafka }}/config/server.properties"
+    src: "{{ item.orig }}"
+    dest: "{{ item.dest }}"
     owner: "{{ user_kafka }}"
     backup: true
-  become: true
-
-- name: alterando o arquivo zookeeper.properties
-  template:
-    src: zookeeper.properties.j2
-    dest: "{{ path_kafka }}/config/zookeeper.properties"
-    owner: "{{ user_kafka }}"
-    backup: true
+  with_items:
+    - orig: server.properties.j2
+      dest: "{{ path_kafka }}/config/server.properties"
+    - orig: zookeeper.properties.j2
+      dest: "{{ path_kafka }}/config/zookeeper.properties"
+    - orig: jvm.properties.j2
+      dest: "{{ path_kafka }}/config/jvm.properties"
   become: true
 
 - name: baixando a lib do prometheus

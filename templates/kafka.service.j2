@@ -9,6 +9,7 @@ Type=simple
 User={{ user_kafka }}
 Restart=on-failure
 Environment=LOG_DIR={{ log_dir_kafka }}
+EnvironmentFile=-{{ path_kafka }}/config/jvm.properties
 Environment=EXTRA_ARGS=-javaagent:{{ path_kafka }}/libs/jmx_prometheus_javaagent-0.6.jar={{ port_exp_prom }}:{{ path_kafka }}/kafka-0-8-2.yml
 ExecStart={{ path_kafka }}/bin/kafka-server-start.sh {{ path_kafka }}/config/server.properties
 ExecStop={{ path_kafka }}/bin/kafka-server-stop.sh
