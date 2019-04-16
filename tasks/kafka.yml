@@ -18,8 +18,8 @@
 
 - name: alterando os arquivos de configuracao
   template:
-    src: server.properties.j2
-    dest: "{{ path_kafka }}/config/server.properties"
+    src: "{{ item.orig }}"
+    dest: "{{ item.dest }}"
     owner: "{{ user_kafka }}"
     backup: true
   with_items:
