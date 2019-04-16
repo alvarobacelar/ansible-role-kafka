@@ -8,7 +8,10 @@ version_kafka_release: 2.12
 port_kafka: 9092
 num_partition: 1
 num_threads: 8
+default_replication: 1
+offset_topic_replication: 1
 log_dir_kafka: /var/log/kafka
+log_retention_hours: 60
 enable_zoo_connect: true
 zoo_host_server: localhost
 zoo_port_server: 2181
