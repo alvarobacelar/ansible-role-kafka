@@ -7,6 +7,10 @@ broker.id=0
 listeners=PLAINTEXT://:{{ port_kafka }}
 advertised.listeners=PLAINTEXT://{{ ansible_default_ipv4.address }}:{{ port_kafka }}
 
+### SOCKET SSL
+# listeners=PLAINTEXT://:9092,SSL://:9093
+# advertised.listeners=PLAINTEXT://{{ ansible_default_ipv4.address }}:9092,SSL://{{ ansible_default_ipv4.address }}:9093
+
 ### Internal Topic Settings 
 auto.create.topics.enable=false
 delete.topic.enable=false
@@ -29,6 +33,13 @@ log.dirs={{ log_dir_kafka }}
 log.retention.hours={{ log_retention_hours }}
 log.segment.bytes=1073741824
 log.retention.check.interval.ms=300000
+
+### SSL
+# ssl.truststore.location=/etc/kafka/key/kafka.truststore.jks
+# ssl.truststore.password={{ pass_key_kafka }}
+# ssl.keystore.location=/etc/kafka/key/kafka.keystore.jks
+# ssl.keystore.password={{ pass_key_kafka }}
+# ssl.key.password={{ pass_key_kafka }}
 
 ### Zookeeper
 zookeeper.connect={{ zoo_host_server }}:{{ zoo_port_server }}
