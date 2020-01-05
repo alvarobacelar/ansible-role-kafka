@@ -1,5 +1,5 @@
 ---
-- name: Converge
+- name: kafka_broker
   hosts: all
   become: true
 

@@ -3,57 +3,30 @@ ansible-role-kafka
 
 [![Build Status](https://travis-ci.org/alvarobacelar/ansible-role-kafka.svg?branch=master)](https://travis-ci.org/alvarobacelar/ansible-role-kafka)
 
-Instalação do kafka nos servidores RedHat e/ou CentOS
+Installation of kafka broker on RadHat
 
-Requesitos
+Requiriments
 ------------
 
-Para o kafka funcionar é necessário ter o zookeeper funcionando em um servidor onde deve ser informado qual é o endereço de acesso, que por padrão é o localhost (partindo da premissa que o zookeeper está instalado na máquina onde está sendo instalada o kafka)
+The Apache Kafka require the cluster ZooKeeper. However, this role have dependecies on the ZooKeeper and Java role. Don't worry with this dependecies, when you download this role, will be download automatically all dependecies. For download use the command bellow: 
 
-Role Variáveis
---------------
-
-Como dito anteriormente, é necessário passar a variável do host e porta do zookeeper, caso o mesmo esteja em servidor diferente. Se não informada o valor padrão desta variável é localhost, bem como as demais variáveis com os valores defaults abaixo:
-```yml
-path_kafka: /etc/kafka
-user_kafka: kafkauser
-version_kafka: 2.2.0
-version_kafka_release: 2.12
-port_kafka: 9092
-num_partition: 1
-num_threads: 8
-default_replication: 1
-offset_topic_replication: 1
-log_dir_kafka: /var/log/kafka
-pass_key_kafka: mypass
-log_retention_hours: 60
-enable_zoo_connect: true
-zoo_host_server: localhost
-zoo_port_server: 2181
-client_port_zoo: 2181
-xmx_limit: 2g
-xms_limit: 2g
-data_dir_zoo: /var/lib/zookeeper
-port_exp_prom: 7072
+```shell
+ansible-galaxy install alvarobacelar.ansible_role_kafka
 ```
 
-Dependencias
-------------
+Role Variables
+--------------
 
-Por padrão essa role usa uma dependência para a instalação do zookeeper. Ao baixar essa role utilizando o ansible galaxy com comando abaixo, você vai baixar todas as suas dependências também:
-```bash
-# ansible-galaxy install alvarobacelar.ansible_role_kafka
-``` 
-As dependências são: 
- - java
- - zookeeper
+This role have very much variables and it is availibles in the file _main.yml_ on directory _defaults_. If you want change propertiers of kafka broker, create on file of variables for playbook and set all key values on the your broker configuration.
 
-Examplo de Playbook
+
+Example of Playbook
 ----------------
 
-Abaixo um exemplo basico de arquivo de playbook
+The playbook this role must be the following:
 
-    - hosts: servers
+    - hosts: kafka_broker
+      become: true
       roles:
          - kafka
 
@@ -62,6 +35,6 @@ License
 
 BSD
 
-Informação do Autor
+About Author
 ------------------
-Alvaro Bacelar - Especialista em Infraestrutura, entusiasta DevOps e Infra As Code
+Alvaro Bacelar - Infraestructure especialist, enthusiastic DevOps and Infra As Code

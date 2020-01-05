@@ -1,16 +1,29 @@
 ---
 
-- name: criando o usuário kafka
-  user:
-    name: "{{ user_kafka }}"
-    shell: /sbin/nologin
-    comment: "Kafka user"
-  become: true
+- name: Kafka broker group
+  group:
+    name: "{{ kafka_broker.group }}"
 
-- name: garantindo que o diretorio de log do kafka esteja criado
+- name: Kafka Broker user
+  user:
+    name: "{{ kafka_broker.user }}"
+    comment: "Kafka User"
+    system: true
+    group: "{{ kafka_broker.group }}"
+
+- name: Create kafka broker data directories
   file:
-    path: "{{ log_dir_kafka }}"
-    owner: "{{ user_kafka }}"
-    mode: 0755
+    path: "{{ item }}"
+    owner: "{{ kafka_broker.user }}"
+    group: "{{ kafka_broker.group }}"
     state: directory
-  become: true
+    mode: 0755
+  with_items: "{{ kafka_broker.datadir }}"
+
+- name: Create logs directory
+  file:
+    path: "{{ kafka_broker.appender_log_path }}"
+    group: "{{ kafka_broker.group }}"
+    owner: "{{ kafka_broker.user }}"
+    mode: '764'
+    recurse: true
