@@ -1,8 +1,19 @@
 ---
 
-- name: inicia kafka
+- name: start kafka
   systemd:
-    name: kafka
+    name: "{{ kafka_broker.service_name }}"
     state: started
     daemon_reload: true
   become: true
+
+- name: load sysctl
+  sysctl:
+    reload: true
+- name: reload systemd
+  systemd:
+    daemon_reload: true
+- name: restart kafka
+  systemd:
+    name: "{{ kafka_broker.service_name }}"
+    state: restarted

@@ -1,56 +1,86 @@
 ---
 
-- name: baixando kafka no servidor
+- name: Downloading package tzg kafka to server
   unarchive:
     src: "{{ _kafka_link }}"
     dest: "/opt/"
-    owner: "{{ user_kafka }}"
+    owner: "{{ kafka_broker.user }}"
     creates: "/opt/kafka_{{ version_kafka_release }}-{{ version_kafka }}"
     remote_src: true
-  become: true
 
-- name: criando um link simbolico do kafka no path {{ path_kafka }}
+- name: Creating link simbolic dir kafka to {{ path_kafka }}
   file:
     src: "/opt/kafka_{{ version_kafka_release }}-{{ version_kafka }}"
     dest: "{{ path_kafka }}"
     state: link
-  become: true
 
-- name: alterando os arquivos de configuracao
+- name: Coping the files configuration kafka
   template:
     src: "{{ item.orig }}"
     dest: "{{ item.dest }}"
-    owner: "{{ user_kafka }}"
+    owner: "{{ kafka_broker.user }}"
     backup: true
   with_items:
     - orig: server.properties.j2
-      dest: "{{ path_kafka }}/config/server.properties"
-    - orig: zookeeper.properties.j2
-      dest: "{{ path_kafka }}/config/zookeeper.properties"
-    - orig: jvm.properties.j2
-      dest: "{{ path_kafka }}/config/jvm.properties"
-  become: true
+      dest: "{{ kafka_broker.config_file }}"
 
-- name: baixando a lib do prometheus
+- name: Downloading prometheus files
   get_url:
-    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.6/jmx_prometheus_javaagent-0.6.jar
-    dest: /etc/kafka/libs/jmx_prometheus_javaagent-0.6.jar
-    owner: "{{ user_kafka }}"
+    url: "{{ jmxexporter_jar_url }}"
+    dest: "{{ jmxexporter_jar_path }}/{{ jmxexporter_jar }}"
+    owner: "{{ kafka_broker.user }}"
     mode: 0644
-  become: true
 
-- name: baixando o arquivo de metricas
+- name: Downloading file yml exporter metrics prometheus
   get_url:
-    url: https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml
-    dest: /etc/kafka/kafka-0-8-2.yml
-    owner: "{{ user_kafka }}"
+    url: "{{ jmxexporter_yml_url }}"
+    dest: "{{ jmxexporter_jar_path }}/{{ jmxexporter_jar_yml }}"
+    owner: "{{ kafka_broker.user }}"
     mode: 0644
-  become: true
 
-- name: copiando o arquivo service
+- name: Create kafka broker log4j config
+  template:
+    src: kafka_server_log4j.properties.j2
+    dest: "{{ kafka_broker.log4j_file }}"
+    mode: 0640
+    owner: "{{ kafka_broker.user }}"
+    group: "{{ kafka_broker.group }}"
+  notify:
+    - restart kafka
+
+- name: Create service override directory
+  file:
+    path: "{{ kafka_broker.systemd_override }}"
+    owner: "{{ kafka_broker.user }}"
+    group: "{{ kafka_broker.group }}"
+    state: directory
+    mode: 0640
+
+- name: Write service overrides
+  template:
+    src: override.conf.j2
+    dest: "{{ kafka_broker.systemd_override }}/override.conf"
+    mode: 0640
+    owner: "{{ kafka_broker.user }}"
+    group: "{{ kafka_broker.group }}"
+  notify:
+    - reload systemd
+    - restart kafka
+
+- name: Tune virtual memory settings
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: "{{ item.key }}.*"
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ kafka_broker_sysctl }}"
+  notify:
+    - load sysctl
+
+- name: Coping file service on the kafka
   template:
     src: kafka.service.j2
-    dest: /etc/systemd/system/kafka.service
+    dest: "{{ kafka_broker.systemd_file }}"
   notify:
-    - inicia kafka
-  become: true
+    - start kafka
+
+- meta: flush_handlers
