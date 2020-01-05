@@ -25,7 +25,7 @@ provisioner:
       kafka_broker:
         hosts:
           instance:
-          instance:
+          localhost:
   lint:
     name: ansible-lint
   playbooks:
