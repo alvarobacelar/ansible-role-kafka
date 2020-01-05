@@ -68,13 +68,11 @@
     - restart kafka
 
 - name: Tune virtual memory settings
-  lineinfile:
-    path: /etc/sysctl.conf
-    regexp: "{{ item.key }}.*"
-    line: "{{ item.key }}={{ item.value }}"
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
   with_dict: "{{ kafka_broker_sysctl }}"
-  notify:
-    - load sysctl
 
 - name: Coping file service on the kafka
   template:

@@ -5,11 +5,7 @@
     name: "{{ kafka_broker.service_name }}"
     state: started
     daemon_reload: true
-  become: true
 
-- name: load sysctl
-  sysctl:
-    reload: true
 - name: reload systemd
   systemd:
     daemon_reload: true
