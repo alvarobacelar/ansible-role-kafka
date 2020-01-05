@@ -1,8 +1,10 @@
+---
+
 all:
-    
+
 zookeeper:
   hosts:
-    ip-172-31-34-246.us-east-2.compute.internal:      
+    ip-172-31-34-246.us-east-2.compute.internal:
     ip-172-31-37-15.us-east-2.compute.internal:
     ip-172-31-34-231.us-east-2.compute.internal:
 kafka_broker:
