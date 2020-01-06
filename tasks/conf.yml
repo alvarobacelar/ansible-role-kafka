@@ -27,3 +27,10 @@
     owner: "{{ kafka_broker.user }}"
     mode: '764'
     recurse: true
+
+- name: Add all hosts kafka clusters in file /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[item]['ansible_all_ipv4_addresses'][0] }} {{ hostvars[item]['ansible_hostname'] }}"
+  with_items:
+    - "{{ groups['kafka_broker'] }}"
