@@ -27,7 +27,6 @@
     owner: "{{ kafka_broker.user }}"
     mode: '764'
     state: directory
-    recurse: true
 
 - name: Add all hosts kafka clusters in file /etc/hosts
   lineinfile:
