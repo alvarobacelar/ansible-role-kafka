@@ -15,7 +15,7 @@ sasl_protocol: none
 
 # jmx exporter variables
 jmxexporter_port: 7072
-jmxexporter_jar_path: /etc/kafka/libs/
+jmxexporter_jar_path: /etc/kafka/libs
 jmxexporter_jar_version: 0.12.0
 jmxexporter_jar_url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/{{ jmxexporter_jar_version }}/jmx_prometheus_javaagent-{{ jmxexporter_jar_version }}.jar
 jmxexporter_yml_url: https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-2_0_0.yml
@@ -59,7 +59,7 @@ open_file_limit: 50000
 
 kafka_broker_open_file_limit: "{{ open_file_limit }}"
 
-kafka_broker_jmxexporter_java_arg_buildout: "-javaagent:{{ jmxexporter_jar_path }}={{ jmxexporter_port }}:{{ jmxexporter_jar_path }}/{{ jmxexporter_jar_yml }}"
+kafka_broker_jmxexporter_java_arg_buildout: "-javaagent:{{ jmxexporter_jar_path }}/{{ jmxexporter_jar }}={{ jmxexporter_port }}:{{ jmxexporter_jar_path }}/{{ jmxexporter_jar_yml }}"
 kafka_broker_jmxexporter_java_arg: "{{ kafka_broker_jmxexporter_java_arg_buildout if jmxexporter_enabled|bool else '' }}"
 
 kafka_broker_log4j_file: /etc/kafka/kafka_server_log4j.properties

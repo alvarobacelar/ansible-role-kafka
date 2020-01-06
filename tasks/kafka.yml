@@ -29,6 +29,7 @@
     url: "{{ jmxexporter_jar_url }}"
     dest: "{{ jmxexporter_jar_path }}/{{ jmxexporter_jar }}"
     owner: "{{ kafka_broker.user }}"
+    group: "{{ kafka_broker.group }}"
     mode: 0644
 
 - name: Downloading file yml exporter metrics prometheus
@@ -36,6 +37,7 @@
     url: "{{ jmxexporter_yml_url }}"
     dest: "{{ jmxexporter_jar_path }}/{{ jmxexporter_jar_yml }}"
     owner: "{{ kafka_broker.user }}"
+    group: "{{ kafka_broker.group }}"
     mode: 0644
 
 - name: Create kafka broker log4j config
