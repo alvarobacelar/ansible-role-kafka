@@ -1,6 +1,7 @@
 ---
 dependencies:
-  - name: alvarobacelar.ansible_role_zookeeper
+  - name: geerlingguy.java
+    become: true
 
 galaxy_info:
   author: alvarobacelar

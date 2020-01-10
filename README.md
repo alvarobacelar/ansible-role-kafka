@@ -8,6 +8,8 @@ Installation of kafka broker on RadHat
 Requiriments
 ------------
 
+For run this role you must create file of inventory, or use the host_example.yml this repo, with groups **zookeeper** and **kafka_broker** with each host corresponding on its group.
+
 The Apache Kafka require the cluster ZooKeeper. However, this role have dependecies on the ZooKeeper and Java role. Don't worry with this dependecies, when you download this role, will be download automatically all dependecies. For download use the command bellow: 
 
 ```shell
