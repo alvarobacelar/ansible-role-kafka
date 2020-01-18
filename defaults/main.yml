@@ -6,6 +6,7 @@ log_dir_kafka: /var/log/kafka/
 version_kafka: 2.4.0
 version_kafka_release: 2.13
 port_kafka: 9092
+advertised_listeners: "{{ ansible_default_ipv6.address }}"
 
 ## SSL Variables
 ssl_enabled: false
@@ -36,6 +37,7 @@ kafka_broker_default_listeners:
     name: "{{ 'EXTERNAL' if kafka_broker_configure_additional_brokers|bool else 'DEFAULT' }}"
     port: "{{ port_kafka }}"
     ssl_enabled: "{{ ssl_enabled }}"
+    advertised: "{{ advertised_listeners }}"
     ssl_mutual_auth_enabled: "{{ ssl_mutual_auth_enabled }}"
     sasl_protocol: "{{ sasl_protocol }}"
 
