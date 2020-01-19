@@ -35,3 +35,8 @@
   with_items:
     - "{{ groups['kafka_broker'] }}"
   failed_when: false
+
+- name: Set file limits to user {{ kafka_broker.user }}
+  template:
+    src: kafka-nofiles.conf.j2
+    dest: /etc/security/limits.d/kafka-nofiles.conf

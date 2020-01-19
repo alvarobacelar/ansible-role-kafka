@@ -13,6 +13,7 @@ listeners={% for listener in kafka_broker_listeners|dict2items %}{% if loop.inde
 
 listener.security.protocol.map={% for listener in kafka_broker_listeners|dict2items %}{% if loop.index > 1%},{% endif %}{{ listener['value']['name'] }}:{{ listener['value']['sasl_protocol'] | kafka_protocol(listener['value']['ssl_enabled'])}}{% endfor %}
 
+advertised.listeners={% for listener in kafka_broker_listeners|dict2items %}{% if loop.index > 1%},{% endif %}{{ listener['value']['name'] }}://{{ listener['value']['advertised'] | default('') }}:{{ listener['value']['port'] }}{% endfor %}
 
 ## Inter Broker Listener Configuration
 inter.broker.listener.name={{ kafka_broker_listeners[kafka_broker_inter_broker_listener_name]['name'] }}

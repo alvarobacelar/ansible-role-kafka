@@ -6,6 +6,8 @@ log_dir_kafka: /var/log/kafka/
 version_kafka: 2.4.0
 version_kafka_release: 2.13
 port_kafka: 9092
+advertised_listeners: "{{ ansible_default_ipv4.address }}"
+nofile_open: 100000
 
 ## SSL Variables
 ssl_enabled: false
@@ -36,6 +38,7 @@ kafka_broker_default_listeners:
     name: "{{ 'EXTERNAL' if kafka_broker_configure_additional_brokers|bool else 'DEFAULT' }}"
     port: "{{ port_kafka }}"
     ssl_enabled: "{{ ssl_enabled }}"
+    advertised: "{{ advertised_listeners }}"
     ssl_mutual_auth_enabled: "{{ ssl_mutual_auth_enabled }}"
     sasl_protocol: "{{ sasl_protocol }}"
 
@@ -43,12 +46,13 @@ kafka_broker_custom_listeners:
   internal:
     name: INTERNAL
     port: 9091
+    advertised: "{{ hostvars['inventory_hostname'] }}"
     ssl_enabled: "{{ ssl_enabled }}"
     ssl_mutual_auth_enabled: "{{ ssl_mutual_auth_enabled }}"
     sasl_protocol: "{{ sasl_protocol }}"
 
 kafka_broker_configure_additional_brokers: true
-kafka_broker_listeners: "{{ kafka_broker_default_listeners | combine(kafka_broker_custom_listeners, recursive=True) if kafka_broker_configure_additional_brokers|bool else  kafka_broker_default_listeners}}"
+kafka_broker_listeners: "{{ kafka_broker_default_listeners | combine(kafka_broker_custom_listeners, recursive=True) if kafka_broker_configure_additional_brokers|bool else  kafka_broker_default_listeners }}"
 kafka_broker_inter_broker_listener_name: "{{ 'internal' if kafka_broker_configure_additional_brokers|bool else 'external' }}"
 
 

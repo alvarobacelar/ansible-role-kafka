@@ -18,6 +18,9 @@ platforms:
 provisioner:
   name: ansible
   inventory:
+    group_vars:
+      all:
+        advertised_listeners: ""
     hosts:
       zookeeper:
         hosts:
