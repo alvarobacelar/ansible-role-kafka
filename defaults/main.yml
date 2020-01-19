@@ -7,6 +7,7 @@ version_kafka: 2.4.0
 version_kafka_release: 2.13
 port_kafka: 9092
 advertised_listeners: "{{ ansible_default_ipv4.address }}"
+nofile_open: 100000
 
 ## SSL Variables
 ssl_enabled: false
