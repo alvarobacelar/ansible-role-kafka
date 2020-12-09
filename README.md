@@ -27,7 +27,7 @@ Example of Playbook
 
 The playbook this role must be the following:
 
-    - hosts: kafka_broker
+    - hosts: kafkabroker
       become: true
       roles:
          - kafka

@@ -3,7 +3,7 @@
 # variáveis default do kafka
 path_kafka: /etc/kafka
 log_dir_kafka: /var/log/kafka/
-version_kafka: 2.4.0
+version_kafka: 2.6.0
 version_kafka_release: 2.13
 port_kafka: 9092
 advertised_listeners: "{{ ansible_default_ipv4.address }}"
@@ -27,7 +27,8 @@ jmxexporter_jar_yml: kafka-2-0-0.yml
 jmxexporter_enabled: true
 
 # link download kafka
-_kafka_link: http://ftp.unicamp.br/pub/apache/kafka/{{ version_kafka }}/kafka_{{ version_kafka_release }}-{{ version_kafka }}.tgz
+_kafka_link: https://downloads.apache.org/kafka/{{ version_kafka }}/kafka_{{ version_kafka_release }}-{{ version_kafka }}.tgz
+#_kafka_link: http://ftp.unicamp.br/pub/apache/kafka/{{ version_kafka }}/kafka_{{ version_kafka_release }}-{{ version_kafka }}.tgz
 
 zookeeper:
   properties:
@@ -114,12 +115,12 @@ kafka_broker:
     enabled: true
     state: started
   properties:
-    group.initial.rebalance.delay.ms: 0
+    group.initial.rebalance.delay.ms: 3
     log.retention.check.interval.ms: 300000
     log.retention.hours: 168
     log.segment.bytes: 1073741824
     num.io.threads: 16
-    num.network.threads: 8
+    num.network.threads: 4
     num.partitions: 1
     num.recovery.threads.per.data.dir: 2
     offsets.topic.replication.factor: 3
@@ -129,3 +130,5 @@ kafka_broker:
     transaction.state.log.min.isr: 2
     transaction.state.log.replication.factor: 3
     zookeeper.connection.timeout.ms: 4000
+    auto.create.topics.enable: false
+    # metric.reporters: com.linkedin.kafka.cruisecontrol.metricsreporter.CruiseControlMetricsReporter

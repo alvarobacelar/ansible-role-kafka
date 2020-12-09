@@ -1,7 +1,7 @@
 ---
-- name: kafka_broker
-  hosts: all
+- name: Kafka install
+  hosts: kafkabroker
   become: true
 
   roles:
-    - role: alvarobacelar.kafka
+    - role: ansible-role-kafka
